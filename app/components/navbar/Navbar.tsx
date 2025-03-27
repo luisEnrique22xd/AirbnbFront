@@ -4,6 +4,7 @@ import SearchFilters from "./SearchFilters";
 import UserNav from "./UserNav";
 import { getUserId } from "@/app/lib/actions";
 import AddPropertyButton from "./AddPropertyButton";
+import { use } from "react";
 
 const Navbar =async ()=>{
     const userId = await getUserId();
@@ -22,7 +23,9 @@ const Navbar =async ()=>{
                     </div>
 
                     <div className="flex items-center space-x-6">
-                        <AddPropertyButton />
+                        <AddPropertyButton
+                        userId={userId}
+                        />
                         
                         <UserNav 
                         userId = {userId}
