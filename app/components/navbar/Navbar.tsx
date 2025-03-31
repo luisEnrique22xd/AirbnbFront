@@ -4,7 +4,6 @@ import SearchFilters from "./SearchFilters";
 import UserNav from "./UserNav";
 import { getUserId } from "@/app/lib/actions";
 import AddPropertyButton from "./AddPropertyButton";
-import { use } from "react";
 
 const Navbar =async ()=>{
     const userId = await getUserId();

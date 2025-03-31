@@ -3,8 +3,9 @@ import PropertyList from '@/app/components/properties/PropertyList';
 import { getUserId } from '@/app/lib/actions';
 import apiServices from '@/app/services/apiServices';
 import Image from 'next/image';
-const LandlordDetailPage =async({params}:{params:{id:string}})=>{
+const LandlordDetailPage =async ({params}:{params:{id:string}})=>{
     const landlord = await apiServices.get(`/api/auth/${params.id}`)
+    console.log(landlord)
     const userId = await getUserId();
     return(
         <main className="max-w-[1500px] mx-auto px-6 pt-10 pb-6">
