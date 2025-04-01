@@ -8,6 +8,7 @@ export type PropertyType = {
     title: string;
     price_per_night: number;
     image_url: string;
+    is_favorite:boolean;
 }
 
 interface PropertyListProps{
@@ -17,6 +18,26 @@ interface PropertyListProps{
 const PropertyList: React.FC<PropertyListProps> = ({
     landlord_id,}) => {
     const [properties, setProperties] = useState<PropertyType[]>([]);
+
+    
+    const markFavorite = (id: string, is_favorite: boolean) => {
+        const tmpProperties = properties.map((property: PropertyType) => {
+            if (property.id == id) {
+                property.is_favorite = is_favorite
+
+                if (is_favorite) {
+                    console.log('added to list of favorited propreties')
+                } else {
+                    console.log('removed from list')
+                }
+            }
+
+            return property;
+        })
+
+        setProperties(tmpProperties);
+
+    }
     const getProperties = async () => {
         let url = '/api/properties/';
 
@@ -25,7 +46,14 @@ const PropertyList: React.FC<PropertyListProps> = ({
         }
         const tmpProperties = await apiServices.get(url);
 
-        setProperties(tmpProperties.data
+        setProperties(tmpProperties.data.map((property:PropertyType)=>{
+            if(tmpProperties.favorites.includes(property.id)){
+                property.is_favorite = true
+            }else{
+                property.is_favorite=false
+            }
+            return property;
+        })
         );
 
     };
@@ -41,6 +69,7 @@ const PropertyList: React.FC<PropertyListProps> = ({
                 <PropertyListItem 
                 key={property.id} 
                 property={property}
+                markFavorite={(is_favorite:any)=> markFavorite(property.id, is_favorite)}
                 />
             )
          })}
