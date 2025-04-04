@@ -6,14 +6,20 @@ import { useState } from "react";
 import CustomButton from "../forms/CustomButton";
 import {Range } from "react-date-range";
 import DatePicker from "../forms/Calendar";
-
 const initalDateRange = {startDate: new Date, endDate: new Date, key: 'selection'}
 
 const SearchModal=()=>{
     let content = (<></>);
     const searchModal = useSearchModal();
     const [dateRange,setDateRange]= useState<Range>(initalDateRange)
+    const [numGuests,setNumGuests]= useState<string>('1')
+    const [numBedrooms,setNumBedrooms]= useState<string>('0')
+    const [numBathrooms,setNumBathrooms]= useState<string>('0')
     const [country, setCountry]= useState<SelectCountryValue>();
+
+    const closeAndSearch=()=>{
+        searchModal.close()
+    }
 
     //set date range
     const _setDateRange = (selection:Range)=>{
@@ -85,12 +91,71 @@ const SearchModal=()=>{
         </div>
         </>
     )
+
+    const contentDetails = (
+        <>
+            <h2 className="mb-6 text-2xl">Details</h2>
+
+            <div className="space-y-4">
+                <div className="space-y-4">
+                    <label>Number of guests:</label>
+                    <input 
+                        type="number" 
+                        min="1" 
+                        value={numGuests} 
+                        placeholder="Number of guests..."
+                        onChange={(e) => setNumGuests(e.target.value)} 
+                        className="w-full h-14 px-4 border border-gray-300 rounded-xl"
+                    />
+                </div>
+
+                <div className="space-y-4">
+                    <label>Number of bedrooms:</label>
+                    <input 
+                        type="number" 
+                        min="1" 
+                        value={numBedrooms} 
+                        placeholder="Number of bedrooms..."
+                        onChange={(e) => setNumBedrooms(e.target.value)} 
+                        className="w-full h-14 px-4 border border-gray-300 rounded-xl"
+                    />
+                </div>
+
+                <div className="space-y-4">
+                    <label>Number of bathrooms:</label>
+                    <input 
+                        type="number" 
+                        min="1" 
+                        value={numBathrooms} 
+                        placeholder="Number of bathrooms..."
+                        onChange={(e) => setNumBathrooms(e.target.value)} 
+                        className="w-full h-14 px-4 border border-gray-300 rounded-xl"
+                    />
+                </div>
+            </div>
+
+            <div className="mt-6 flex flex-row gap-4">
+                <CustomButton
+                    label="<- Check out date"
+                    onClick={() => searchModal.open('checkout')}
+                />
+
+                <CustomButton
+                    label="Search"
+                    onClick={closeAndSearch}
+                />
+            </div>
+        </>
+    )
+
     if(searchModal.step === 'location'){
         content = contentLocation
     }else if(searchModal.step ==='checkIn'){
         content = contentCheckIn
     }else if(searchModal.step ==='checkOut'){
         content = contentCheckOut
+    }else if(searchModal.step === 'details'){
+        content = contentDetails
     }
     return(
         <Modal
