@@ -5,13 +5,14 @@ import apiServices from "@/app/services/apiServices";
 import { UserType } from "../page";
 import { getAccessToken } from "@/app/lib/actions";
 
-export type MessegeType={
-    id:string;
-    name:string;
-    body:string;
+
+export type MessageType = {
+    id: string;
+    name: string;
+    body: string;
     conversationId: string;
-    sent_to : UserType;
-    created_by : UserType
+    sent_to: UserType;
+    created_by: UserType
 }
 
 const ConversationPage = async({params}: {params: {id:string }}) => {
