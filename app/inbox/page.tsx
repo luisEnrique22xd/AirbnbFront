@@ -33,6 +33,7 @@ const InboxPage = async()=>{
                         key={conversation.id}
                         userId = {userId}
                         conversation = {conversation}
+                       
                     />
                 )
             })}
